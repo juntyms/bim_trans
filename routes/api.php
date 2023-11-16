@@ -18,10 +18,6 @@ use App\Http\Controllers\TransactionsController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::prefix('v1')->group(function () {
     // public routes
     Route::post('/register', [AuthController::class, 'register']);
