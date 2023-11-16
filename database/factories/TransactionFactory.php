@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Status;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -22,7 +23,8 @@ class TransactionFactory extends Factory
             'user_id' => User::all()->random()->id,
             'due_on' => fake()->date(),
             'vat'=> fake()->randomFloat(2,0,1),
-            'is_vat' => fake()->numberBetween(0,1)
+            'is_vat' => fake()->numberBetween(0,1),
+            'status_id' => Status::all()->random()->id
         ];
     }
 }

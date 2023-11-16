@@ -39,6 +39,8 @@ class TransactionsController extends Controller
 
         $request->validated($request->all());
 
+        //Check date
+
         $transaction = Transaction::create([
             'amount' => $request->amount,
             'user_id' => $request->user_id,

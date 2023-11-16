@@ -2,6 +2,7 @@
 ``git clone git@github.com:juntyms/bim_trans.git``
 ``compose update``
 ``php artisan migrate``
+``php artisan db:seed``
 
 ## Usage Postman
 ---
