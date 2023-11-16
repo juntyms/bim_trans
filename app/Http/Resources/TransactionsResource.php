@@ -27,10 +27,17 @@ class TransactionsResource extends JsonResource
                 'updated_at' => $this->updated_at
             ],
             'relationships' => [
-                'id' => (string)$this->payer->id,
-                'name' => $this->payer->name,
-                'email' => $this->payer->email,
-                'is_admin' => (string)$this->payer->is_admin
+                'payer' => [
+                    'id' => (string)$this->payer->id,
+                    'name' => $this->payer->name,
+                    'email' => $this->payer->email,
+                    'is_admin' => (string)$this->payer->is_admin
+                ],
+                'status' => [
+                    'id' => (string) $this->status->id,
+                    'name' => $this->status->name,
+                    'description' => $this->status->description
+                ]
             ]
         ];
     }

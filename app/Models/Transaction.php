@@ -12,11 +12,16 @@ class Transaction extends Model
     use HasFactory;
 
     protected $fillable = [
-        'amount','user_id','due_on','vat','is_vat'
+        'amount','user_id','due_on','vat','is_vat','status_id'
     ];
 
     public function payer(): BelongsTo
     {
         return $this->belongsTo(User::class,'user_id','id');
+    }
+
+    public function status()
+    {
+        return $this->hasOne(Status::class,'id','status_id');
     }
 }

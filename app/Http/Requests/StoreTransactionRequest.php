@@ -26,7 +26,8 @@ class StoreTransactionRequest extends FormRequest
             'user_id' => ['required','integer'],
             'due_on' => ['required','date'],
             'vat' => ['required','decimal:2'],
-            'is_vat' => ['required','boolean']
+            'is_vat' => ['required','boolean'],
+            'status_id' => ['integer']
         ];
     }
 }

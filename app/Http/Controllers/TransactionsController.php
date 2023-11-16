@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
@@ -12,6 +13,11 @@ use App\Http\Requests\StoreTransactionRequest;
 class TransactionsController extends Controller
 {
     use HttpResponses;
+
+    const PAID = 1;
+    const OUTSTANDING = 2;
+    const OVERDUE = 3;
+
     /**
      * Display a listing of the resource.
      */
@@ -37,19 +43,36 @@ class TransactionsController extends Controller
             return $this->error('','Only Admin can create a transaction',401);
         }
 
-        $request->validated($request->all());
+        $request['status_id'] = $this->getStatus($request->due_on);
 
-        //Check date
+        $request->validated($request->all());
 
         $transaction = Transaction::create([
             'amount' => $request->amount,
             'user_id' => $request->user_id,
             'due_on' => $request->due_on,
             'vat' => $request->vat,
-            'is_vat' => $request->is_vat
+            'is_vat' => $request->is_vat,
+            'status_id' => $request->status_id
         ]);
 
         return new TransactionsResource($transaction);
+    }
+
+    private function getStatus($date_due)
+    {
+
+        $due_date = new Carbon($date_due); //Check date
+
+        if (0 >= Carbon::now()->diffInDays($due_date->endOfDay() , false)) {
+
+            return Self::OVERDUE; // Overdue
+
+        } else {
+
+            return Self::OUTSTANDING; // Outstanding
+
+        }
     }
 
     /**
