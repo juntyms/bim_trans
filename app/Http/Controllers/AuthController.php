@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -34,17 +33,20 @@ class AuthController extends Controller
     {
         $request->validated($request->all());
 
-        $user = User::where('email',$request->email)->first();
+        if (!Auth::attempt($request->only('email','password'))) {
 
-        if (!$user || !Auth::attempt($request->only('email','password'))) {
             return $this->error('','Credentials do not match',401);
+
         }
 
+        $request->session()->regenerate(); // Session for web use
+
         return $this->success([
-            'user' => $user,
-            'token' => $user->createToken('Api Token of '. $user->name)->plainTextToken
+            'user' => Auth::user(),
+            'token' => Auth::user()->createToken('Api Token of '. Auth::user()->name)->plainTextToken
         ]);
     }
+
 
     public function logout()
     {
@@ -54,4 +56,5 @@ class AuthController extends Controller
             'message'=> 'You have been logged out and your token has been deleted'
         ]);
     }
+
 }
