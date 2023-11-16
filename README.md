@@ -38,10 +38,18 @@ Body
 ---
 
 ##### Other Endpoints
+**Registration**
 POST /api/v1/register
 
+**Transactions**
 GET /api/v1/transactions
 POST /api/v1/transactions
 GET /api/v1/transactions/{transaction}
 PATCH /api/v1/transactions/{transaction}
 DELETE /api/v1/transactions/{transaction}
+
+**Payments**
+POST /api/v1/payments
+
+**Reports**
+POST /api/v1/report
