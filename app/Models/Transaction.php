@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -24,4 +25,26 @@ class Transaction extends Model
     {
         return $this->hasOne(Status::class,'id','status_id');
     }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function paid()
+    {
+
+    }
+
+    public function outstanding()
+    {
+
+    }
+
+    public function overdue()
+    {
+
+    }
+
+
 }
