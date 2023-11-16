@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\PaymentsController;
 use App\Http\Controllers\TransactionsController;
 
@@ -31,6 +32,7 @@ Route::prefix('v1')->group(function () {
         Route::post('/logout',[AuthController::class, 'logout']);
         Route::resource('/transactions', TransactionsController::class);
         Route::resource('/payments', PaymentsController::class);
+        Route::post('/report', [ReportsController::class,'monthly']);
     });
 });
 

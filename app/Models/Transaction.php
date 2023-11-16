@@ -31,20 +31,4 @@ class Transaction extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function paid()
-    {
-
-    }
-
-    public function outstanding()
-    {
-
-    }
-
-    public function overdue()
-    {
-
-    }
-
-
 }

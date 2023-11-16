@@ -38,6 +38,7 @@ class TransactionsResource extends JsonResource
                     'name' => $this->status->name,
                     'description' => $this->status->description
                 ]
+
             ]
         ];
     }
