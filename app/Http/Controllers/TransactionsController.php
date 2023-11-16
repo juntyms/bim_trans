@@ -55,39 +55,40 @@ class TransactionsController extends Controller
      */
     public function show(Transaction $transaction)
     {
-        if (Auth::user()->is_admin === 1) {
-            return new TransactionsResource($transaction);
+
+        return $this->transactionAuthorization($transaction) ? $this->transactionAuthorization($transaction) : new TransactionsResource($transaction);
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Transaction $transaction)
+    {
+
+        if ($this->transactionAuthorization($transaction)) {
+
+            return $this->transactionAuthorization($transaction);
         }
 
-        if (Auth::user()->id !== $transaction->user_id) {
-            return $this->error('','You are not authorized to view this transaction.',401);
-        }
+        $transaction->update($request->all());
 
         return new TransactionsResource($transaction);
 
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Transaction $transaction)
     {
-        //
+        return $this->transactionAuthorization($transaction) ? $this->transactionAuthorization($transaction) : $transaction->delete();
+    }
+
+    private function transactionAuthorization($transaction)
+    {
+        if (Auth::user()->is_admin !== 1 && Auth::user()->id !== $transaction->user_id ) {
+            return $this->error('','You are not authorized.',401);
+        }
     }
 }
