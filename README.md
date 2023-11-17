@@ -1,9 +1,9 @@
 # Installation
-``git clone git@github.com:juntyms/bim_trans.git``
-``compose update``
-``php artisan migrate``
-``php artisan db:seed``
-``php artisan serve``
+`git clone git@github.com:juntyms/bim_trans.git`
+`compose update`
+`php artisan migrate`
+`php artisan db:seed`
+`php artisan serve`
 
 ## Usage Postman
 ---
