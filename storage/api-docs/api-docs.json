@@ -1,0 +1,414 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/v1/register": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Register user",
+                "operationId": "6796c44e1f6079c411abbfed066c5907",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Fullname",
+                        "required": true
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "name": "password_confirmation",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/v1/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "logging in user",
+                "operationId": "da2ca4d7a5cdec77b8b45a20373535cb",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "email",
+                        "required": true
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/v1/logout": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Logging out user",
+                "operationId": "c4eddaf1a2e990cc90e4326c0d731d41",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/payments": {
+            "post": {
+                "tags": [
+                    "Payment"
+                ],
+                "summary": "Add Payment",
+                "operationId": "a29863356a2eefc1c488f627e019646e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "transaction_id",
+                                    "amount",
+                                    "paid_on"
+                                ],
+                                "properties": {
+                                    "transaction_id": {
+                                        "description": "Transaction ID Number",
+                                        "type": "integer"
+                                    },
+                                    "amount": {
+                                        "description": "Amount",
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "paid_on": {
+                                        "description": "Transaction ID Number",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-11-20"
+                                    },
+                                    "details": {
+                                        "description": "Other Details",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/report": {
+            "post": {
+                "tags": [
+                    "Report"
+                ],
+                "summary": "Report",
+                "operationId": "3cd3f0c6ed9a979834ca0655479813f5",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "start_date",
+                                    "end_date"
+                                ],
+                                "properties": {
+                                    "start_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-09-30"
+                                    },
+                                    "end_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2023-10-30"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transactions": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Display all transaction per user or all by admin",
+                "operationId": "ccd4b3fcfe737ae4ea26a6e106cab296",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Save Transaction",
+                "operationId": "4b981ad840986858ac8699a0cbe32792",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "amount",
+                                    "user_id",
+                                    "due_on",
+                                    "vat",
+                                    "is_vat"
+                                ],
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "due_on": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "vat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "is_vat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/transactions/{transaction}": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Show Transaction",
+                "operationId": "024a9df09d0e633db8a269c0c003e99a",
+                "parameters": [
+                    {
+                        "name": "transaction",
+                        "in": "path",
+                        "description": "transaction id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Delete Transaction",
+                "operationId": "def82cdc0c7480614079bd18f7135f8a",
+                "parameters": [
+                    {
+                        "name": "transaction",
+                        "in": "path",
+                        "description": "transaction id",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Edit Transaction",
+                "operationId": "75ad49b318c5c545fc34ff036bf3e7b3",
+                "parameters": [
+                    {
+                        "name": "transaction",
+                        "in": "path",
+                        "description": "transaction id",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/x-www-form-urlencoded": {
+                            "schema": {
+                                "required": [
+                                    "amount",
+                                    "user_id",
+                                    "due_on",
+                                    "vat",
+                                    "is_vat"
+                                ],
+                                "properties": {
+                                    "amount": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "due_on": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2022-07-01"
+                                    },
+                                    "vat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    },
+                                    "is_vat": {
+                                        "type": "number",
+                                        "format": "float"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerToken": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerToken": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "scheme": "bearer"
+            }
+        }
+    }
+}

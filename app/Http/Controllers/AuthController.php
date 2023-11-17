@@ -13,6 +13,41 @@ class AuthController extends Controller
 {
     use HttpResponses;
 
+    /**
+     * @OA\Post(
+     *  tags={"User"},
+     *  path="/api/v1/register",
+     *  summary="Register user",
+     *      @OA\Parameter(
+     *          name="name",
+     *          in="query",
+     *          description="Fullname",
+     *          required=true,
+     *      ),
+     *      @OA\Parameter(
+     *          name="email",
+     *          in="query",
+     *          description="email",
+     *          required=true,
+     *      ),
+     *      @OA\Parameter(
+     *          name="password",
+     *          in="query",
+     *          required=true,
+     *      ),
+     *      @OA\Parameter(
+     *          name="password_confirmation",
+     *          in="query",
+     *          required=true,
+     *      ),
+     *  @OA\Response(response=200,description="OK"),
+     *  @OA\Response(response=401,description="Unauthorized")
+     * )
+     *
+     *
+     * @param StoreUserRequest $request
+     * @return void
+     */
     public function register(StoreUserRequest $request)
     {
         $request->validated($request->all());
@@ -29,6 +64,26 @@ class AuthController extends Controller
         ]);
     }
 
+    /**
+     * @OA\Post(
+     *  tags={"User"},
+     *  path="/api/v1/login",
+     *  summary="logging in user",
+     *      @OA\Parameter(
+     *          name="email",
+     *          in="query",
+     *          description="email",
+     *          required=true,
+     *      ),
+     *      @OA\Parameter(
+     *          name="password",
+     *          in="query",
+     *          required=true,
+     *      ),
+     *  @OA\Response(response=200,description="OK"),
+     *  @OA\Response(response=401,description="Unauthorized")
+     * )
+     */
     public function login(LoginUserRequest $request)
     {
         $request->validated($request->all());
@@ -47,7 +102,16 @@ class AuthController extends Controller
         ]);
     }
 
-
+    /**
+     * @OA\POST(
+     *  tags={"User"},
+     *  path="/api/v1/logout",
+     *  summary="Logging out user",
+     *  security={ {"bearerToken": {}} },
+     *  @OA\Response(response=200, description="OK"),
+     *  )
+     *
+     */
     public function logout()
     {
         Auth::user()->currentAccessToken()->delete();

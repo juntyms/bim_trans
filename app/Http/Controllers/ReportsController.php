@@ -9,6 +9,38 @@ use App\Http\Resources\ReportsResource;
 
 class ReportsController extends Controller
 {
+    /**
+     * @OA\POST(
+     *  tags={"Report"},
+     *  path="/api/v1/report",
+     *  summary="Report",
+     *  security={ {"bearerToken": {}} },
+     *  @OA\RequestBody(
+     *      required=true,
+     *      @OA\MediaType(
+     *          mediaType="multipart/form-data",
+     *          @OA\Schema(
+     *              required={"start_date","end_date"},
+     *              @OA\Property(
+     *                  property="start_date",
+     *                  type="string",
+     *                  format="date",
+     *                  example="2023-09-30"
+     *              ),
+     *              @OA\Property(
+     *                  property="end_date",
+     *                  type="string",
+     *                  format="date",
+     *                  example="2023-10-30"
+     *              ),
+     *          ),
+     *      ),
+     *  ),
+     *  @OA\Response(response=200, description="OK"),
+     *  @OA\Response(response=401, description="Unauthorized")
+     * )
+     *
+     */
     public function monthly(ReportRequest $request)
     {
         $start_report = \Carbon\Carbon::parse($request->start_date)->format('Y-m');
