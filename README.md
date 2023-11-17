@@ -3,6 +3,7 @@
 ``compose update``
 ``php artisan migrate``
 ``php artisan db:seed``
+``php artisan serve``
 
 ## Usage Postman
 ---
@@ -53,3 +54,13 @@ POST /api/v1/payments
 
 **Reports**
 POST /api/v1/report
+
+---
+### Swagger API Documentation
+
+- visit http://127.0.0.1:8000 (or your local dev url)
+
+---
+### Contact
+- Name: Junn Eric Timoteo
+- Email: juntyms@gmail.com
