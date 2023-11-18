@@ -22,7 +22,7 @@ class TransactionFactory extends Factory
             'amount'=> fake()->randomFloat(3,20,90),
             'user_id' => User::all()->random()->id,
             'due_on' => fake()->date(),
-            'vat'=> fake()->randomFloat(2,0,1),
+            'vat'=> '0.00',
             'is_vat' => fake()->numberBetween(0,1),
             'status_id' => Status::all()->random()->id
         ];

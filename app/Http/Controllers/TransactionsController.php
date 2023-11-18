@@ -85,13 +85,16 @@ class TransactionsController extends Controller
      */
     public function store(StoreTransactionRequest $request)
     {
-        if (1 !== Auth::user()->is_admin) {
+
+        if (1 != Auth::user()->is_admin) {
             return $this->error('','Only Admin can create a transaction',401);
         }
 
         $request['status_id'] = $this->getStatus($request->due_on);
 
+
         $request->validated($request->all());
+        //dd($request->all());
 
         $transaction = Transaction::create([
             'amount' => $request->amount,
@@ -233,7 +236,7 @@ class TransactionsController extends Controller
 
     private function transactionAuthorization($transaction)
     {
-        if (1 !== Auth::user()->is_admin && Auth::user()->id !== $transaction->user_id ) {
+        if (1 != Auth::user()->is_admin && Auth::user()->id != $transaction->user_id ) {
             return $this->error('','You are not authorized.',401);
         }
     }
