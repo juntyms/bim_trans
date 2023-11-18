@@ -83,7 +83,8 @@ Body
 #### Testing
 
 Update phpunit.xml to use mysql database
-```
+
+```xml
 From
 
     <env name="DB_CONNECTION" value="sqlite"/>
