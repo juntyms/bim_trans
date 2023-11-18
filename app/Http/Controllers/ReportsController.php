@@ -46,9 +46,6 @@ class ReportsController extends Controller
      */
     public function monthly(ReportRequest $request)
     {
-        // if (1 != Auth::user()->is_admin) {
-        //     return $this->error('','Only Admin can create a transaction',401);
-        // }
         if ($this->adminAuthorization()) {
             return $this->adminAuthorization();
         }
