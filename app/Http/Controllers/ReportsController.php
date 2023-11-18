@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 use App\Models\TransactionReport;
 use App\Http\Requests\ReportRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ReportsResource;
 
 class ReportsController extends Controller
 {
+    use HttpResponses;
     /**
      * @OA\POST(
      *  tags={"Report"},
@@ -43,6 +46,13 @@ class ReportsController extends Controller
      */
     public function monthly(ReportRequest $request)
     {
+        // if (1 != Auth::user()->is_admin) {
+        //     return $this->error('','Only Admin can create a transaction',401);
+        // }
+        if ($this->adminAuthorization()) {
+            return $this->adminAuthorization();
+        }
+
         $start_report = \Carbon\Carbon::parse($request->start_date)->format('Y-m');
 
         $end_report = \Carbon\Carbon::parse($request->end_date)->format('Y-m');

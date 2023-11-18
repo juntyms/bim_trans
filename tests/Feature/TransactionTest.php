@@ -52,6 +52,21 @@ class TransactionTest extends TestCase
         $response->assertCreated();
     }
 
+    public function test_user_cannot_save_transaction(): void
+    {
+        $user = Sanctum::actingAs(User::factory()->create(['is_admin'=>'0']));
+
+        $response = $this->actingAs($user)->postJson('/api/v1/transactions',[
+            'amount' => '500',
+            'user_id' => $user->id,
+            'due_on' => '2023-11-18',
+            'vat' => '0.00',
+            'is_vat' => '0'
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
     public function test_admin_can_retrieve_transaction(): void
     {
         User::factory(1)->create();
@@ -86,6 +101,25 @@ class TransactionTest extends TestCase
         $response->assertOk();
     }
 
+    public function test_user_cannot_update_transaction(): void
+    {
+        User::factory(10)->create();
+
+        $user = User::where('is_admin',0)->first();
+
+        Sanctum::actingAs($user);
+
+        Transaction::factory(1)->create(['user_id'=>$user->id]);
+
+        $transaction = Transaction::first();
+
+        $response = $this->actingAs($user)->call('PATCH','/api/v1/transactions/'. $transaction->id,[
+            'amount' => '100'
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
     public function test_admin_can_delete_transaction(): void
     {
         User::factory(10)->create();
@@ -101,6 +135,23 @@ class TransactionTest extends TestCase
         $response = $this->actingAs($user)->call('DELETE','/api/v1/transactions/'. $transaction->id);
 
         $response->assertOk();
+    }
+
+    public function test_user_cannot_delete_transaction(): void
+    {
+        User::factory(10)->create();
+
+        $user = User::where('is_admin',0)->first();
+
+        Sanctum::actingAs($user);
+
+        Transaction::factory(10)->create();
+
+        $transaction = Transaction::first();
+
+        $response = $this->actingAs($user)->call('DELETE','/api/v1/transactions/'. $transaction->id);
+
+        $response->assertUnauthorized();
     }
 
     public function test_user_can_only_view_their_transaction(): void

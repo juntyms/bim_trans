@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\PaymentsResource;
 use App\Http\Requests\StorePaymentRequest;
 
 class PaymentsController extends Controller
 {
+    use HttpResponses;
+
     const PAID = 1;
 
     /**
@@ -57,6 +61,13 @@ class PaymentsController extends Controller
      */
     public function store(StorePaymentRequest $request)
     {
+        // if (1 != Auth::user()->is_admin) {
+        //     return $this->error('','Only Admin can create a transaction',401);
+        // }
+        if ($this->adminAuthorization()) {
+            return $this->adminAuthorization();
+        }
+
         // record payment
         $request->validated($request->all());
 

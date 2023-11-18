@@ -54,20 +54,20 @@ Body
 
 ##### Other Endpoints
 **Registration**
-POST /api/v1/register
+- POST /api/v1/register
 
 **Transactions**
-GET /api/v1/transactions
-POST /api/v1/transactions
-GET /api/v1/transactions/{transaction}
-PATCH /api/v1/transactions/{transaction}
-DELETE /api/v1/transactions/{transaction}
+- GET /api/v1/transactions
+- POST /api/v1/transactions
+- GET /api/v1/transactions/{transaction}
+- PATCH /api/v1/transactions/{transaction}
+- DELETE /api/v1/transactions/{transaction}
 
 **Payments**
-POST /api/v1/payments
+- POST /api/v1/payments
 
 **Reports**
-POST /api/v1/report
+- POST /api/v1/report
 
 ---
 ### Swagger API Documentation
@@ -75,7 +75,7 @@ POST /api/v1/report
 - visit http://127.0.0.1:8000 (or your local dev url)
 
 ---
-### Unit Test
+### Testing
 
 ```
 php artisan test

@@ -32,10 +32,15 @@ class TransactionsController extends Controller
      */
     public function index()
     {
-        if (1 === Auth::user()->is_admin) {
-            $transactions = Transaction::all();
-        } else {
+        // if (1 === Auth::user()->is_admin) {
+        //     $transactions = Transaction::all();
+        // } else {
+        //     $transactions = Transaction::where('user_id',Auth::user()->id)->get();
+        // }
+        if ($this->adminAuthorization()) {
             $transactions = Transaction::where('user_id',Auth::user()->id)->get();
+        } else {
+            $transactions = Transaction::all();
         }
 
         return TransactionsResource::collection(
@@ -86,8 +91,11 @@ class TransactionsController extends Controller
     public function store(StoreTransactionRequest $request)
     {
 
-        if (1 != Auth::user()->is_admin) {
-            return $this->error('','Only Admin can create a transaction',401);
+        // if (1 != Auth::user()->is_admin) {
+        //     return $this->error('','Only Admin can create a transaction',401);
+        // }
+        if ($this->adminAuthorization()) {
+            return $this->adminAuthorization();
         }
 
         $request['status_id'] = $this->getStatus($request->due_on);
@@ -198,10 +206,8 @@ class TransactionsController extends Controller
      */
     public function update(Request $request, Transaction $transaction)
     {
-
-        if ($this->transactionAuthorization($transaction)) {
-
-            return $this->transactionAuthorization($transaction);
+        if ($this->adminAuthorization()) {
+            return $this->adminAuthorization();
         }
 
         $request['status_id'] = $this->getStatus($transaction->due_on);
@@ -234,10 +240,5 @@ class TransactionsController extends Controller
         return $this->transactionAuthorization($transaction) ? $this->transactionAuthorization($transaction) : $transaction->delete();
     }
 
-    private function transactionAuthorization($transaction)
-    {
-        if (1 != Auth::user()->is_admin && Auth::user()->id != $transaction->user_id ) {
-            return $this->error('','You are not authorized.',401);
-        }
-    }
+
 }

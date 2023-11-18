@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
+
 trait HttpResponses {
 
     protected function success($data, $message = null, $code = 200)
@@ -20,5 +22,21 @@ trait HttpResponses {
             'message' => $message,
             'data' => $data
         ], $code);
+    }
+
+    private function transactionAuthorization($transaction)
+    {
+        if (1 != Auth::user()->is_admin && Auth::user()->id != $transaction->user_id ) {
+            return $this->error('','You are not authorized.',401);
+        }
+    }
+
+    private function adminAuthorization()
+    {
+
+        if (1 != Auth::user()->is_admin) {
+            return $this->error('','Only Admin can create a transaction',401);
+        }
+
     }
 }

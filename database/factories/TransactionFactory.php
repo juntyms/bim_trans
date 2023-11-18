@@ -20,7 +20,7 @@ class TransactionFactory extends Factory
     {
         return [
             'amount'=> fake()->randomFloat(3,20,90),
-            'user_id' => User::all()->random()->id,
+            'user_id' => User::factory()->create()->id,
             'due_on' => fake()->date(),
             'vat'=> '0.00',
             'is_vat' => fake()->numberBetween(0,1),
