@@ -82,6 +82,19 @@ Body
 ---
 #### Testing
 
+Update phpunit.xml to use mysql database
+```
+From
+
+    <env name="DB_CONNECTION" value="sqlite"/>
+    <env name="DB_DATABASE" value=":memory:"/>
+
+TO
+    <env name="DB_CONNECTION" value="mysql"/>
+    <env name="DB_DATABASE" value="testing database"/>
+```
+
+Run Test
 ```
 php artisan test
 ```

@@ -108,6 +108,7 @@ class TransactionsController extends Controller
         ]);
 
         return new TransactionsResource($transaction);
+
     }
 
     private function getStatus($date_due)
