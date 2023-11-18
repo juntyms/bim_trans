@@ -1,13 +1,23 @@
 # Installation
-`git clone git@github.com:juntyms/bim_trans.git`
+```
+git clone git@github.com:juntyms/bim_trans.git
+```
 
-`compose update`
+```
+compose update
+```
 
-`php artisan migrate`
+```
+php artisan migrate
+```
 
-`php artisan db:seed`
+```
+php artisan db:seed
+```
 
-`php artisan serve`
+```
+php artisan serve
+```
 
 ## Usage Postman
 ---
@@ -63,6 +73,13 @@ POST /api/v1/report
 ### Swagger API Documentation
 
 - visit http://127.0.0.1:8000 (or your local dev url)
+
+---
+### Unit Test
+
+```
+php artisan test
+```
 
 ---
 ### Contact
